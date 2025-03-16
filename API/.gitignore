@@ -1,0 +1,26 @@
+# Ignore build output
+bin/
+obj/
+
+# User-specific files
+.vscode/
+
+# User-specific configuration files
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# Windows installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Ignore the packages folder
+packages/
+
+# Ignore IDE-specific files
+.idea/
+*.sublime-workspace
+*.sublime-project
