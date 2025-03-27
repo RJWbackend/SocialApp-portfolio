@@ -9,12 +9,12 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-http = inject(HttpClient);
+ http = inject(HttpClient);
  registerMode = false;
  users: any;
 
  ngOnInit(): void {
-    this.getUsers
+    this.getUsers();
  }
 
  registerToggle(){
