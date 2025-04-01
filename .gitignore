@@ -1,3 +1,8 @@
 .vscode/settings.json
 .vscode/tasks.json
 .vscode/launch.json
+API/social.db-shm
+API/social.db-wal
+API/social.db
+API/social.db
+API/social.db
