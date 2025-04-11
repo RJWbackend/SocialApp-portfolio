@@ -41,3 +41,7 @@ testem.log
 .DS_Store
 Thumbs.db
 *.db
+
+# Ignore local SSL cert files
+ssl/localhost-key.pem
+ssl/localhost.pem
