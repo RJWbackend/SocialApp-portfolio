@@ -46,10 +46,10 @@
                     <p>{{member.interests}}</p>
                 </tab>
                 <tab heading="Photos" #photoTab="tab">
-                    @if (photoTab) {
+                    @if (photoTab.active) {
                         <gallery 
-                        [items]="images" 
-                        class="gallery">
+                            [items]="images" 
+                            class="gallery">
     
                         </gallery>
                     }
