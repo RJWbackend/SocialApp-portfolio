@@ -1,9 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Member } from '../_models/member';
 import { Photo } from '../_models/photo';
-import { tap } from 'rxjs';
+import { of, tap } from 'rxjs';
 import { PaginatedResult } from '../_models/pagination';
 import { UserParams } from '../_models/userParams';
 
@@ -15,8 +15,13 @@ export class MembersService {
   baseUrl = environment.apiUrl;
   // members = signal<Member[]>([]);
   paginatedResult = signal<PaginatedResult<Member[]> | null>(null);
+  memberCache = new Map();
 
   getMembers(userParams: UserParams) {
+    const response = this.memberCache.get(Object.values(userParams).join('-')); // check if the data is already in the cache
+    if(response) return this.setPaginatedResponse(response); // if it is, return it
+
+    console.log(Object.values(userParams).join('-'));
     let params= this.setPaginationHeaders(userParams.pageNumber, userParams.pageSize);
 
     params = params.append('minAge', userParams.minAge);
@@ -24,13 +29,19 @@ export class MembersService {
     params = params.append('gender', userParams.gender);
     params = params.append('orderBy', userParams.orderBy);
 
+    //fetch from server
     return this.http.get<Member[]>(this.baseUrl + 'users', { observe: 'response', params }).subscribe({
       next: response => {
-        this.paginatedResult.set({
-          items: response.body as Member[],
-          pagination: JSON.parse(response.headers.get('Pagination')!)
-        })
+        this.setPaginatedResponse(response);
+        this.memberCache.set(Object.values(userParams).join('-'), response);// cache the response for future use
       }
+    })
+  }
+
+  private setPaginatedResponse(response: HttpResponse<Member []>) {
+    this.paginatedResult.set({
+      items: response.body as Member[],
+      pagination: JSON.parse(response.headers.get('Pagination')!)
     })
   }
 
@@ -46,6 +57,12 @@ export class MembersService {
   }
 
   getMember(username: string) {
+    const member: Member = [...this.memberCache.values()]
+      .reduce((arr, elem) => arr.concat(elem.body), [])
+      .find((m: Member) => m.username === username);
+
+    if (member) return of(member);
+    
     return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
 
