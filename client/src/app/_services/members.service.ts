@@ -1,39 +1,56 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { effect, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Member } from '../_models/member';
 import { Photo } from '../_models/photo';
 import { of, tap } from 'rxjs';
 import { PaginatedResult } from '../_models/pagination';
 import { UserParams } from '../_models/userParams';
+import { User } from '../_models/users';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MembersService {
   private http = inject(HttpClient);
+  private accountService = inject(AccountService); // Inject AccountService for user specific filters
   baseUrl = environment.apiUrl;
   // members = signal<Member[]>([]);
   paginatedResult = signal<PaginatedResult<Member[]> | null>(null);
   memberCache = new Map();
+  user = this.accountService.currentUser(); // Get the current user from the account service
+  defaultUserParams = new UserParams(this.user); // Default filter settings
+  userParams = signal<UserParams>(new UserParams(this.user)); //model signal for user params
 
-  getMembers(userParams: UserParams) {
-    const response = this.memberCache.get(Object.values(userParams).join('-')); // check if the data is already in the cache
+  constructor() {
+    // Initialize userParams based on the logged-in user
+    effect(() => {
+      const user: User | null = this.accountService.currentUser();
+      if (user) {
+        this.userParams.set(new UserParams(user));
+      }
+    });
+  }
+
+  getMembers() {
+    const userParams = this.userParams();
+    const response = this.memberCache.get(Object.values(this.userParams()).join('-')); // check if the data is already in the cache
     if(response) return this.setPaginatedResponse(response); // if it is, return it
 
-    console.log(Object.values(userParams).join('-'));
-    let params= this.setPaginationHeaders(userParams.pageNumber, userParams.pageSize);
+    //console.log(Object.values(userParams).join('-'));
+    let params= this.setPaginationHeaders(this.userParams().pageNumber, this.userParams().pageSize);
 
-    params = params.append('minAge', userParams.minAge);
-    params = params.append('maxAge', userParams.maxAge);
-    params = params.append('gender', userParams.gender);
-    params = params.append('orderBy', userParams.orderBy);
+    params = params.append('minAge', this.userParams().minAge);
+    params = params.append('maxAge', this.userParams().maxAge);
+    params = params.append('gender', this.userParams().gender);
+    params = params.append('orderBy', this.userParams().orderBy);
 
     //fetch from server
     return this.http.get<Member[]>(this.baseUrl + 'users', { observe: 'response', params }).subscribe({
       next: response => {
         this.setPaginatedResponse(response);
-        this.memberCache.set(Object.values(userParams).join('-'), response);// cache the response for future use
+        this.memberCache.set(Object.values(this.userParams()).join('-'), response);// cache the response for future use
       }
     })
   }
@@ -94,6 +111,17 @@ export class MembersService {
       //   }))
       // })
     )
+  }
+
+  updateUserParams(params: Partial<UserParams>) {
+    this.userParams.update((currentParams) => ({
+      ...currentParams,
+      ...params,
+    }));
+  }
+  
+  resetUserParams() {
+    this.userParams.set(new UserParams(this.user));
   }
 
 }
