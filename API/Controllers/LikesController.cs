@@ -8,7 +8,7 @@ namespace API.Controllers;
 
 public class LikesController(ILikesRepository likesRepository) : BaseApiController
 {
-    [HttpPost("{targetUserId:int}")]
+    [HttpPost("{targetUserId:int}")]// liking or unliking someone
     public async Task<ActionResult> Togglelike(int targetUserId)
     {
         var sourceUserId = User.GetUserId();
@@ -38,8 +38,14 @@ public class LikesController(ILikesRepository likesRepository) : BaseApiControll
     }
 
 
+    [HttpGet("list")] // getting list of people you liked
 
-    [HttpGet]
+    public async Task<ActionResult<IEnumerable<int>>> GetCurrentUserLikeIds()
+    {
+         return Ok(await likesRepository.GetCurrentUserLikeIds(User.GetUserId())); 
+    }
+
+    [HttpGet] // getting list of likes
 
     public async Task<ActionResult<IEnumerable<MemberDto>>> GetUserLikes(string predicate)
     {
