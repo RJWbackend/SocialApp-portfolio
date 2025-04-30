@@ -59,6 +59,7 @@
                     <app-member-messages 
                         [username]="member.username"
                         [messages]="messages"
+                        (updateMessages)="onUpdateMessages($event[0])"
                     ></app-member-messages>
                 </tab>
             </tabset>
