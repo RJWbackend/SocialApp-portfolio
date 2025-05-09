@@ -29,7 +29,7 @@ SocialApp is a modern dating application designed to connect people. Built with 
 ### Backend (API)
 
 1. Clone the repository:bash
-   git clone https://github.com/your-repo/socialapp.git
+   git clone https://github.com/RJWbackend/SocialApp-portfolio.git
    cd socialapp/API
    ```
 
@@ -39,15 +39,15 @@ SocialApp is a modern dating application designed to connect people. Built with 
 
 4. Run the API:
    
-   dotnet run### Frontend (Client)
+   dotnet run
 
 1. Navigate to the client directory:
    
-   cd socialapp/client2. Install dependencies:
+   cd socialapp/client. Install dependencies:
    
-   npm install3. Start the development server:
+   npm install. Start the development server:
    
-   ng serve4. Open your browser and navigate to `http://localhost:4200/`.
+   ng serve. Open your browser and navigate to `http://localhost:4200/`.
 
 ## Usage
 
