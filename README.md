@@ -1,6 +1,6 @@
 SocialApp - Dating Application
 
-SocialApp is a modern dating application designed to connect people. Built with a .NET backend for the API and an Angular frontend for the client, SocialApp provides a seamless and feature-rich experience for users looking to find meaningful connections.
+SocialApp is a modern dating application designed to connect people. Built with a .NET backend for the API and an Angular 19 frontend for the client, SocialApp provides a seamless and feature-rich experience for users looking to find meaningful connections.
 Features
 
     User Authentication: Secure login and registration functionality.
