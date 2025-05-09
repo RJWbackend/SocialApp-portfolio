@@ -1,63 +1,66 @@
-test-branch
 
-# Client
+# SocialApp - Dating Application
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.4.
+SocialApp is a modern dating application designed to connect people. Built with a .NET backend for the API and an Angular frontend for the client, SocialApp provides a seamless and feature-rich experience for users looking to find meaningful connections.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **User Authentication**: Secure login and registration functionality.
+- **User Profiles**: Edit profile details, including description, interests, location, and more.
+- **Photo Gallery**: Upload and manage photos using the Cloudinary API.
+- **Messaging**: Send and receive messages with other users.
+- **Likes**: Like other users and view users who liked you.
+- **Filters**: Filter matches based on age range, gender, and other criteria.
+- **Detailed User Profiles**: View detailed profiles, including location, age, last active, member since, and more.
+- **Tabs for Easy Navigation**:
+  - **About**: View user descriptions and what they are looking for.
+  - **Interests**: See user interests.
+  - **Photo Gallery**: Browse user photos.
+  - **Messages**: Send messages to users.
 
-```bash
-ng serve
-```
+## Installation
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Prerequisites
 
-## Code scaffolding
+- [.NET SDK](https://dotnet.microsoft.com/download) (for the API)
+- [Node.js](https://nodejs.org/) and [Angular CLI](https://angular.io/cli) (for the client)
+- A Cloudinary account for photo storage.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Backend (API)
 
-```bash
-ng generate component component-name
-```
+1. Clone the repository:bash
+   git clone https://github.com/your-repo/socialapp.git
+   cd socialapp/API
+   ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+2. Restore dependencies:
+   
+   dotnet restore3. Update the `appsettings.json` file with your database connection string and Cloudinary API credentials.
 
-```bash
-ng generate --help
-```
+4. Run the API:
+   
+   dotnet run### Frontend (Client)
 
-## Building
+1. Navigate to the client directory:
+   
+   cd socialapp/client2. Install dependencies:
+   
+   npm install3. Start the development server:
+   
+   ng serve4. Open your browser and navigate to `http://localhost:4200/`.
 
-To build the project run:
+## Usage
 
-```bash
-ng build
-```
+1. **Register/Login**: Create an account or log in with your credentials.
+2. **Edit Profile**: Update your profile details, including description, interests, and location.
+3. **Upload Photos**: Add photos to your gallery using the Cloudinary API.
+4. **Find Matches**: Use filters to find matches based on age range and gender.
+5. **Interact with Users**: Like users, send messages, and view detailed profiles.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## License
 
-## Running unit tests
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+---
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-
-test2
+For more information or contributions, feel free to contact the project maintainers.
